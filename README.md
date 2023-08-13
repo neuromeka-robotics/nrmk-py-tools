@@ -21,6 +21,6 @@ pip3 install numpy scipy PyYAML matplotlib
 - create_dir(dir), delete_dir(dir), delete_file(path): 폴더 및 경로 만들고 지우기 
 - get_memory_usage_gb() 현재 메모리 사용량 확인
 
-### math.py
+### math_tools.py
 - 회전 행렬 및 변환 행렬 연산: ```scripts``` 예제 참조
 - T2cmd(Tbe), cmd2T(Tbe_cmd): 변환 행렬과 Indy Task command 간 변환 

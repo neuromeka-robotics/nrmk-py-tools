@@ -39,10 +39,10 @@ def calc_rotvec_vecs(vec1, vec2):
     return rotvec
 
 def rad2deg(rads):
-    return rads/np.pi*180
-        
+    return np.asarray(rads)/np.pi*180
+
 def deg2rad(degs):
-    return degs/180*np.pi
+    return np.asarray(degs)/180*np.pi
 
 def Rot_axis( axis, q ):
     '''
