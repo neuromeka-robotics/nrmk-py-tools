@@ -14,6 +14,22 @@ class NumpyEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
+##
+# @class WriteSwap
+# @brief create swap (backup) file before writing
+class WriteSwap:
+    def __init__(self, filepath):
+        self.filepath = filepath
+        self.filepath_swap = filepath + ".swap"
+
+    def __enter__(self):
+        return self.filepath_swap
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            os.rename(self.filepath_swap, self.filepath)
+
+
 def save_json(filepath, data):
     with open(filepath, 'w', encoding="utf-8") as outfile:
         json.dump(data, outfile, ensure_ascii=False, indent=2, cls=NumpyEncoder)
@@ -31,7 +47,8 @@ def load_yaml(filepath):
         if 'YAML:1.0' in line:
             _ = stream.readline()
             yml_dict = yaml.safe_load(stream)  # yaml.load(f) call has been deprecated in the 5.x line
-            save_yaml(filepath, yml_dict)
+            with WriteSwap(filepath) as filepath_swp:
+                save_yaml(filepath_swp, yml_dict)
         else:
             stream.seek(0)
             yml_dict = yaml.safe_load(stream)
